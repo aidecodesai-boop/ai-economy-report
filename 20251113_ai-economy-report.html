@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>インタラクティブ・レポート：AI経済の未来</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Calm Harmony (bg-amber-50, text-slate-800, accent-sky-700) -->
+    <!-- Application Structure Plan: A single-page, top-to-bottom narrative structure is used. A sticky navigation header with jump-links allows for exploration. This "explainer" model is best for a conceptual summary, guiding the user from the core concept (Intro) -> the central conflict (Problem) -> the proposed answers (Solutions) -> the mechanics (Foundation) -> the call to action (Proposals). Interactivity is focused on clarifying the report's key framework (the 2x2 grid) rather than data plotting. -->
+    <!-- Visualization & Content Choices: Report Info: 2x2 framework (Origins/Permeability) -> Goal: Organize/Compare -> Viz: Interactive HTML/JS 2x2 grid -> Interaction: onClick to display info for each quadrant, default "danger" highlight -> Justification: Makes the paper's core theoretical model tangible and interactive. / Report Info: 2 Solutions (Auction, Mission) -> Goal: Inform -> Viz: 2-column styled cards -> Justification: Clear, digestible comparison. / Report Info: 3 Foundations (ID, PoP, Police) -> Goal: Inform -> Viz: 3-column styled cards -> Justification: Breaks down infra into 3 parts. / Report Info: 5 Proposals -> Goal: Inform -> Viz: Styled ordered list -> Justification: Clear, scannable call to action. -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Sans JP', 'Inter', sans-serif;
+        }
+        .quadrant.active {
+            box-shadow: 0 0 0 4px #0ea5e9, 0 0 0 8px rgba(14, 165, 233, 0.3);
+            transform: scale(1.02);
+            z-index: 10;
+        }
+        .quadrant.danger {
+            box-shadow: 0 0 0 4px #ef4444;
+        }
+    </style>
+</head>
+<body class="bg-amber-50 text-slate-800 leading-relaxed">
+
+    <header class="sticky top-0 z-50 bg-sky-800 text-sky-100 shadow-lg">
+        <nav class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="flex-shrink-0">
+                    <span class="text-xl font-bold">AI経済レポート</span>
+                </div>
+                <div class="hidden md:flex md:items-center md:space-x-6">
+                    <a href="#problem" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-700 transition">問題点</a>
+                    <a href="#solution" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-700 transition">解決策</a>
+                    <a href="#foundation" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-700 transition">技術基盤</a>
+                    <a href="#proposals" class="px-3 py-2 rounded-md text-sm font-medium hover:bg-sky-700 transition">5つの提言</a>
+                </div>
+                <div class="md:hidden flex items-center">
+                    <button id="mobile-menu-btn" class="inline-flex items-center justify-center p-2 rounded-md text-sky-200 hover:text-white hover:bg-sky-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" aria-controls="mobile-menu" aria-expanded="false">
+                        <span class="sr-only">メインメニューを開く</span>
+                        <svg id="menu-icon-open" class="block h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+                        </svg>
+                        <svg id="menu-icon-close" class="hidden h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </nav>
+        <div class="md:hidden hidden" id="mobile-menu">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+                <a href="#problem" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-sky-700 transition">問題点</a>
+                <a href="#solution" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-sky-700 transition">解決策</a>
+                <a href="#foundation" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-sky-700 transition">技術基盤</a>
+                <a href="#proposals" class="block px-3 py-2 rounded-md text-base font-medium hover:bg-sky-700 transition">5つの提言</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto p-4 md:p-8">
+
+        <section id="intro" class="text-center py-16">
+            <h1 class="text-4xl md:text-5xl font-extrabold text-slate-900 mb-6">AIがAIと取引する「AI経済」がやってくる</h1>
+            <p class="text-xl text-slate-600 max-w-3xl mx-auto">Google DeepMindが提言する、人間不在の高速取引がもたらすリスクと、私たちが今すぐ設計すべき未来の姿。</p>
+        </section>
+
+        <section id="problem" class="py-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-4 border-sky-300 pb-2">問題点：最も危険な「成り行きまかせ」の未来</h2>
+            <p class="mb-8 text-lg text-slate-600">論文は、AI経済の未来を2つの軸で分類し、私たちが現在向かっている「自然発生的」かつ「透過的」な道筋が最も危険であると警告します。下のインタラクティブな図で、4つの未来の可能性と、私たちが直面する2つの大きなリスクを探ってみましょう。</p>
+
+            <div class="mb-8">
+                <h3 class="text-2xl font-bold text-center text-slate-800 mb-6">AI経済の4つの未来（クリックして詳細を表示）</h3>
+                <div class="flex justify-center items-center mb-6">
+                    <span class="mr-4 font-bold">隔離的</span>
+                    <div class="relative w-full max-w-2xl">
+                        <div class="grid grid-cols-2 gap-px bg-slate-300 border border-slate-300 rounded-lg overflow-hidden shadow-lg">
+                            <div id="q1" class="quadrant p-6 bg-white cursor-pointer hover:bg-amber-100 transition relative" data-quadrant="q1">
+                                <h4 class="font-bold text-lg text-slate-800">意図的・非透過的</h4>
+                                <p class="text-sm text-slate-500">隔離された実験場</p>
+                            </div>
+                            <div id="q2" class="quadrant p-6 bg-white cursor-pointer hover:bg-amber-100 transition relative danger" data-quadrant="q2">
+                                <h4 class="font-bold text-lg text-slate-800">自然発生的・透過的</h4>
+                                <p class="text-sm text-slate-500">現在の危険な道筋</p>
+                                <span class="absolute top-2 right-2 text-xs bg-red-100 text-red-700 px-2 py-0.5 rounded-full font-bold">危険</span>
+                            </div>
+                            <div id="q3" class="quadrant p-6 bg-white cursor-pointer hover:bg-amber-100 transition relative" data-quadrant="q3">
+                                <h4 class="font-bold text-lg text-slate-800">意図的・透過的</h4>
+                                <p class="text-sm text-slate-500">設計された安全な市場</p>
+                            </div>
+                            <div id="q4" class="quadrant p-6 bg-white cursor-pointer hover:bg-amber-100 transition relative" data-quadrant="q4">
+                                <h4 class="font-bold text-lg text-slate-800">自然発生的・非透過的</h4>
+                                <p class="text-sm text-slate-500">（論文ではあまり焦点が当てられていない）</p>
+                            </div>
+                        </div>
+                        <div class="absolute -bottom-6 left-0 right-0 text-center font-bold">意図的 ⟷ 自然発生的（起源）</div>
+                        <div class="absolute -left-4 top-0 bottom-0 flex items-center transform -rotate-90 -translate-x-full">
+                            <span class="font-bold whitespace-nowrap">透過的 ⟷ 非透過的（透過性）</span>
+                        </div>
+                    </div>
+                    <span class="ml-4 font-bold">開放的</span>
+                </div>
+
+                <div id="quadrant-info" class="bg-white p-6 rounded-lg shadow-inner mt-12 min-h-[100px] border border-slate-200">
+                </div>
+            </div>
+
+            <h3 class="text-2xl font-bold text-slate-800 mt-16 mb-6">2つの大きなリスク</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-red-500">
+                    <h4 class="text-xl font-bold text-red-700 mb-3">1. 経済的な不安定さ（AI版フラッシュ・クラッシュ）</h4>
+                    <p class="text-slate-600">AI同士が人間の目に見えない超高速で取引を繰り返すことで、アルゴリズムが暴走。過去の株式市場の「瞬間暴落」のように、AI経済が人間の経済全体を巻き込み、予測不能な大混乱を引き起こす恐れがあります。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg border-t-4 border-red-500">
+                    <h4 class="text-xl font-bold text-red-700 mb-3">2. 不平等の爆発的な拡大</h4>
+                    <p class="text-slate-600">高性能なAIエージェントを雇える富裕層が、交渉で常に勝利し、より良い条件を独占。標準的なAIしか持たない人々は常に不利な条件を飲まされ、格差が現在の「デジタル格差」とは比較にならないレベルで拡大する可能性があります。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="solution" class="py-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-4 border-sky-300 pb-2">解決策：AI経済を「意図的に設計」する</h2>
+            <p class="mb-8 text-lg text-slate-600">論文は、これらのリスクを回避し、AIの力を人類の利益に結びつけるため、私たちが積極的に経済のルールを「設計」すべきだと提案します。ここでは、そのための2つの具体的なアイデアを紹介します。</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white p-8 rounded-xl shadow-lg transition hover:shadow-2xl hover:scale-[1.02]">
+                    <span class="text-6xl" role="img" aria-label="天秤">⚖️</span>
+                    <h3 class="text-2xl font-bold text-slate-800 my-4">1. 公平性を実現する「オークション」</h3>
+                    <p class="text-slate-600 mb-4">AIの「交渉力」で勝負が決まる世界は不平等です。そうではなく、すべての人間に「毎週1000ポイントの仮想通貨」を平等に配布します。</p>
+                    <p class="text-slate-600">人気ホテルの最後の1室が欲しい時、AIは交渉するのではなく、このポイントで「入札」します。AIの性能に関係なく、その人にとっての「重要度」に基づいて公平に資源が分配されます。</p>
+                </div>
+                <div class="bg-white p-8 rounded-xl shadow-lg transition hover:shadow-2xl hover:scale-[1.02]">
+                    <span class="text-6xl" role="img" aria-label="地球">🌍</span>
+                    <h3 class="text-2xl font-bold text-slate-800 my-4">2. 社会課題を解決する「ミッション経済」</h3>
+                    <p class="text-slate-600 mb-4">AI経済を、社会問題を解決する力として利用します。例えば、「気候変動の解決」という「ミッション」を設定。</p>
+                    <p class="text-slate-600">「CO2を1トン削減する技術を発見したAIに1000ポイント」といったインセンティブを与えます。世界中のAIが報酬を求め、競い合い、協力しながら、人類共通の目標達成に向けて動き出します。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="foundation" class="py-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-4 border-sky-300 pb-2">信頼できるAI経済のための「技術的な土台」</h2>
+            <p class="mb-8 text-lg text-slate-600">これらの解決策は、強力な技術的基盤なしには実現できません。論文は、安全で信頼できるAI経済を支えるために不可欠な、3つの「社会インフラ」を提示しています。</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <div class="bg-white p-6 rounded-xl shadow-lg transition hover:shadow-xl">
+                    <span class="text-6xl" role="img" aria-label="IDカード">🆔</span>
+                    <h3 class="text-xl font-bold text-slate-800 my-3">1. AIの「身分証明書」</h3>
+                    <p class="text-slate-600">取引相手のAIが信頼できるか、本当に「医療アドバイスの資格」を持っているかを証明する「デジタル証明書」です。これにより、詐欺的なAIや能力のないAIを市場から排除します。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg transition hover:shadow-xl">
+                    <span class="text-6xl" role="img" aria-label="人のシルエット">👤</span>
+                    <h3 class="text-xl font-bold text-slate-800 my-3">2. 「本物の人間」であることの証明</h3>
+                    <p class="text-slate-600">一人の人間が100万体の偽AIを作り、仮想通貨を不正に独占することを防ぎます。「1つのAIが、実在する1人の人間に紐づいている」ことを証明する技術（Proof-of-Personhood）が不可欠です。</p>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-lg transition hover:shadow-xl">
+                    <span class="text-6xl" role="img" aria-label="警察官">👮</span>
+                    <h3 class="text-xl font-bold text-slate-800 my-3">3. 「AI警察」と説明責任</h3>
+                    <p class="text-slate-600">AIのスピードに対抗できるのはAIだけです。市場を24時間監視し、不正や暴走を即座に検知する「AI警察」を配備。問題発生時には人間が介入し、AIやその所有者に責任を問える新しい法律も必要です。</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="proposals" class="py-12">
+            <h2 class="text-3xl font-bold text-slate-900 mb-4 border-b-4 border-sky-300 pb-2">私たちの未来への「5つの提言」</h2>
+            <p class="mb-8 text-lg text-slate-600">論文は、安全で有益なAI経済を実現するために、私たちが今すぐ取り組むべき5つの具体的な行動を提言しています。</p>
+
+            <ol class="space-y-6">
+                <li class="flex items-start bg-white p-6 rounded-lg shadow-md transition hover:shadow-lg">
+                    <span class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-sky-700 text-2xl font-bold mr-6">1</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">新しいルールの整備</h3>
+                        <p class="text-slate-600">AIが損害を与えた場合の責任の所在を明確にする、新しい法的枠組みを早急に作る必要があります。</p>
+                    </div>
+                </li>
+                <li class="flex items-start bg-white p-6 rounded-lg shadow-md transition hover:shadow-lg">
+                    <span class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-sky-700 text-2xl font-bold mr-6">2</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">共通規格の作成</h3>
+                        <p class="text-slate-600">どんな企業が作ったAI同士でも（例：Google製、Apple製）、安全に通信・取引できるオープンな技術標準が不可欠です。</p>
+                    </div>
+                </li>
+                <li class="flex items-start bg-white p-6 rounded-lg shadow-md transition hover:shadow-lg">
+                    <span class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-sky-700 text-2xl font-bold mr-6">3</span>
+                    <div
+>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">監視システムの構築</h3>
+                        <p class="text-slate-600">「AI警察」による自動監視と、人間による最終的な監督を組み合わせた、ハイブリッドな監視インフラを構築します。</p>
+                    </div>
+                </li>
+                <li class="flex items-start bg-white p-6 rounded-lg shadow-md transition hover:shadow-lg">
+                    <span class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-sky-700 text-2xl font-bold mr-6">4</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">小規模なテストの開始</h3>
+                        <p class="text-slate-600">大学のキャンパス内や、特定の都市の交通システムなど、限定的な範囲で「AI経済」の試験運用を開始し、問題点を洗い出します。</p>
+                    </div>
+                </li>
+                <li class="flex items-start bg-white p-6 rounded-lg shadow-md transition hover:shadow-lg">
+                    <span class="flex-shrink-0 flex items-center justify-center h-12 w-12 rounded-full bg-sky-100 text-sky-700 text-2xl font-bold mr-6">5</span>
+                    <div>
+                        <h3 class="text-xl font-bold text-slate-800 mb-2">人間社会のサポート</h3>
+                        <p class="text-slate-600">AIによる人間の仕事の代替リスクに備え、AIと協働するための教育や、社会保障制度（セーフティネット）を強化します。</p>
+                    </div>
+                </li>
+            </ol>
+        </section>
+
+        <section id="conclusion" class="py-16 text-center bg-sky-800 rounded-xl shadow-2xl text-white my-12">
+            <h2 class="text-3xl font-bold mb-6">結論：「成り行きに任せる」未来はない</h2>
+            <p class="text-xl text-sky-100 max-w-3xl mx-auto mb-8 px-4">AIによる「仮想経済」は、もはやSFではありません。この強力な技術が社会に混乱をもたらすか、繁栄をもたらすかは、これからの私たちの「設計」にかかっています。私たちが望む未来を明確に描き、その未来にAIが貢献するよう、今こそ意図的に市場のルールを作っていくべき時なのです。</p>
+        </section>
+
+    </main>
+
+    <footer class="bg-slate-800 text-slate-400 mt-16 py-8">
+        <div class="max-w-6xl mx-auto px-4 text-center text-sm">
+            <p>このページは、Google DeepMindの論文「Virtual Agent Economies」の要約に基づき、情報アーキテクトの視点で作成されたインタラクティブ・レポートです。</p>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+            const mobileMenu = document.getElementById('mobile-menu');
+            const menuIconOpen = document.getElementById('menu-icon-open');
+            const menuIconClose = document.getElementById('menu-icon-close');
+
+            mobileMenuBtn.addEventListener('click', () => {
+                const isExpanded = mobileMenuBtn.getAttribute('aria-expanded') === 'true';
+                mobileMenuBtn.setAttribute('aria-expanded', !isExpanded);
+                mobileMenu.classList.toggle('hidden');
+                menuIconOpen.classList.toggle('hidden');
+                menuIconClose.classList.toggle('hidden');
+            });
+
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    mobileMenuBtn.setAttribute('aria-expanded', 'false');
+                    mobileMenu.classList.add('hidden');
+                    menuIconOpen.classList.remove('hidden');
+                    menuIconClose.classList.add('hidden');
+                });
+            });
+
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    if (this.pathname === window.location.pathname &&
+                        document.getElementById(this.hash.slice(1))) {
+                        e.preventDefault();
+                        document.querySelector(this.hash).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            const quadrantData = {
+                q1: {
+                    title: '象限1：意図的・非透過的（安全な実験場）',
+                    text: '私たちが意図的に設計し、かつ人間の経済から隔離されたAI経済です。これは、新しいルールやAIの挙動をテストするための「サンドボックス（安全な砂場）」として機能します。リスクが外部に漏れ出すのを防ぎながら実験ができます。'
+                },
+                q2: {
+                    title: '象限2：自然発生的・透過的（現在の危険な道筋）',
+                    text: '何の設計図もないまま、AIエージェントが人間の経済と深く混ざり合いながら、勝手に（自然発生的に）進化していく未来です。論文はこれを「最も危険な道」と指摘します。AIの暴走が直接人間の経済を破壊し、不平等を爆発させるリスクがあります。'
+                },
+                q3: {
+                    title: '象限3：意図的・透過的（目指すべき未来）',
+                    text: '私たちが意図的に「公平性」や「安全性」のためのルールを設計し、その上で人間の経済と接続させる未来です。例えば「オークション」や「ミッション経済」といった仕組みを組み込み、AIの力を社会の利益のために活用することを目指します。'
+                },
+                q4: {
+                    title: '象限4：自然発生的・非透過的',
+                    text: '人間の経済とは隔離された領域で、AI経済が自然発生する未来です。例えば、特定のオンラインゲーム内経済などがこれに近いかもしれませんが、論文の主な焦点ではありません。'
+                }
+            };
+
+            const quadrants = document.querySelectorAll('.quadrant');
+            const infoBox = document.getElementById('quadrant-info');
+
+            function updateInfoBox(quadrantId) {
+                const data = quadrantData[quadrantId];
+                infoBox.innerHTML = `
+                    <h4 class="text-xl font-bold text-sky-700 mb-3">${data.title}</h4>
+                    <p class="text-slate-600">${data.text}</p>
+                `;
+            }
+
+            function setActiveQuadrant(target) {
+                quadrants.forEach(q => q.classList.remove('active'));
+                target.classList.add('active');
+            }
+
+            quadrants.forEach(quadrant => {
+                quadrant.addEventListener('click', (e) => {
+                    const target = e.currentTarget;
+                    const quadrantId = target.dataset.quadrant;
+                    updateInfoBox(quadrantId);
+                    setActiveQuadrant(target);
+                });
+            });
+
+            const initialQuadrant = document.getElementById('q2');
+            updateInfoBox(initialQuadrant.dataset.quadrant);
+            setActiveQuadrant(initialQuadrant);
+        });
+    </script>
+</body>
+</html>
